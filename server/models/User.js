@@ -33,7 +33,7 @@ userSchema.methods.generateJsonWebToken = async function(){
   return jwt.sign(
     {_id:this._id},
     process.env.JWT_SECRET_KEY,
-    {expiresIn:JWT_EXPIRE}
+    {expiresIn:process.env.JWT_EXPIRE}
   )
 }
 
