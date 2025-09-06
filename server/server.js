@@ -1,12 +1,9 @@
-import express from 'express'
+import { config } from "dotenv";
+config();
+import app from './app.js'
 
-const app = express();
-const PORT = 8080;
-
-app.use('/', (req, res)=>{
-    res.send('Hello from vipin')
-})
+const PORT = process.env.PORT || 8000
 
 app.listen(PORT, ()=>{
-    console.log(`Server is running at ${PORT}`)
+    console.log(`✅️ Server is running at ${PORT}`)
 })
