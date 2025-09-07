@@ -18,7 +18,18 @@ export default function Dashboard() {
       const res = await axiosInstance.get("/task/fetch-task");
       setTasks(res.data.tasks || []);
     } catch (err) {
-      console.log(err);
+      toast.error("Failed to load tasks");
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      axiosInstance.get("/user/logout");
+      localStorage.removeItem("token", JSON.stringify({ token: "" }));
+      navigate("/");
+      toast.success("logged out successfully..");
+    } catch (error) {
+      toast.error("Failed to log out ");
     }
   };
 
@@ -66,8 +77,8 @@ export default function Dashboard() {
   return (
     <div className="p-6 bg-gray-50 min-h-screen flex flex-col">
       {/* Toolbar */}
-      <div className="border rounded-lg shadow p-4 bg-sky-100 mb-6 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
-        {/* Search */}
+      <div className="border rounded-xl shadow-md p-4 bg-white mb-6 flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+        {/* Left Section - Search */}
         <div className="relative w-full md:w-1/3">
           <Search
             className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -78,51 +89,66 @@ export default function Dashboard() {
             placeholder="Search tasks..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-3 bg-white py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full pl-10 pr-3 bg-gray-50 py-2 border border-gray-300 rounded-lg 
+                 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
           />
         </div>
 
-        {/* Status Filter */}
-        <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          className="border bg-white p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-        >
-          <option value="all">All</option>
-          <option value="pending">Pending</option>
-          <option value="done">Done</option>
-        </select>
+        {/* Middle Section - Status Filter */}
+        <div>
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="border border-gray-300 bg-gray-50 py-2 px-3 rounded-lg text-gray-700 
+                 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+          >
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
 
-        {/* Add Task */}
-        <button
-          onClick={() => navigate("/task-form")}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow transition"
-        >
-          <PlusCircle size={18} />
-          Add Task
-        </button>
+        {/* Right Section - Buttons */}
+        <div className="flex gap-3">
+          <button
+            onClick={() => navigate("/task-form")}
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 
+                 text-white px-4 py-2 rounded-lg shadow-md transition"
+          >
+            <PlusCircle size={18} />
+            Add Task
+          </button>
+
+          <button
+            onClick={handleLogout} // yahan logout function call karo
+            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 
+                 text-white px-4 py-2 rounded-lg shadow-md transition"
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       {/* Meta: showing range */}
       <div className="flex-1">
         <div className="mb-4 text-sm text-gray-600">
-        Showing <span className="font-medium">{showingFrom}</span>–
-        <span className="font-medium">{showingTo}</span> of{" "}
-        <span className="font-medium">{filteredTasks.length}</span> tasks
-      </div>
+          Showing <span className="font-medium">{showingFrom}</span>–
+          <span className="font-medium">{showingTo}</span> of{" "}
+          <span className="font-medium">{filteredTasks.length}</span> tasks
+        </div>
 
-      {/* Task Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredTasks.length > 0 ? (
-          pageTasks.map((task) => (
-            <TaskCard key={task._id} task={task} refresh={fetchTasks} />
-          ))
-        ) : (
-          <div className="col-span-full text-center text-gray-500 py-10">
-            No tasks found 😔
-          </div>
-        )}
-      </div>
+        {/* Task Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredTasks.length > 0 ? (
+            pageTasks.map((task) => (
+              <TaskCard key={task._id} task={task} refresh={fetchTasks} />
+            ))
+          ) : (
+            <div className="col-span-full text-center text-gray-500 py-10">
+              No tasks found 😔
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Pagination */}
