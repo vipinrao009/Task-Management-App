@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../api/baseUrl.js";
 import TaskCard from "../components/TaskCard.jsx";
 import { PlusCircle, Search } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../api/baseUrl";
+import toast from "react-hot-toast";
 
 export default function TaskForm() {
   const { id } = useParams();
@@ -27,6 +28,11 @@ export default function TaskForm() {
       await axiosInstance.post("/task/create-task", { title, description, status });
     }
     navigate("/dashboard");
+    if(id){
+      toast.success("Task updated successfully...")
+    }else{
+      toast.success("Task created successfully...")
+    }
   };
 
   return (

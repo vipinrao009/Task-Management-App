@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Pencil, Trash2 } from "lucide-react";
 import axiosInstance from "../api/baseUrl";
+import toast from "react-hot-toast";
 
 export default function TaskCard({ task, refresh }) {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ export default function TaskCard({ task, refresh }) {
     if (window.confirm("Are you sure ?")) {
     await axiosInstance.delete(`/task/delete-task/${id}`);
     refresh();
+    toast.success("Task deleted successfully....")
   }
   };
 
