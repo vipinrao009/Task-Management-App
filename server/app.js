@@ -16,6 +16,10 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+app.get("/", (req, res) => {
+  res.json({ success: true, message: "Backend live on Render 🚀" });
+});
+
 app.use('/api/v1/user',userRouter)
 app.use('/api/v1/task',taskRouter)
 
