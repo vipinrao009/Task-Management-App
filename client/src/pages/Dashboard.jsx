@@ -66,7 +66,7 @@ export default function Dashboard() {
   return (
     <div className="p-6 bg-gray-50 min-h-screen flex flex-col">
       {/* Toolbar */}
-      <div className="border rounded-lg shadow p-4 bg-white mb-6 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+      <div className="border rounded-lg shadow p-4 bg-sky-100 mb-6 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
         {/* Search */}
         <div className="relative w-full md:w-1/3">
           <Search
@@ -78,7 +78,7 @@ export default function Dashboard() {
             placeholder="Search tasks..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full pl-10 pr-3 bg-white py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
         </div>
 
@@ -86,7 +86,7 @@ export default function Dashboard() {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="border p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="border bg-white p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
         >
           <option value="all">All</option>
           <option value="pending">Pending</option>
