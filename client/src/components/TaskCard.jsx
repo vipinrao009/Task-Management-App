@@ -1,8 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { Pencil, Trash2 } from "lucide-react";
+import axiosInstance from "../api/baseUrl";
 
 export default function TaskCard({ task, refresh }) {
   const navigate = useNavigate();
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure ?")) {
+    await axiosInstance.delete(`/task/delete-task/${id}`);
+    refresh();
+  }
+  };
 
   return (
     <div className=" bg-sky-100 border border-gray-200 rounded-2xl shadow-md p-5 hover:shadow-lg transition-all duration-300">
@@ -32,6 +40,7 @@ export default function TaskCard({ task, refresh }) {
           Edit
         </button>
         <button
+          onClick={() => handleDelete(task._id)}
           className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1.5 rounded-lg transition-colors"
         >
           <Trash2 size={16} />

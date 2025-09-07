@@ -63,7 +63,7 @@ export default function Dashboard() {
   }, [totalPages, page]);
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-gray-50 min-h-screen flex flex-col">
       {/* Toolbar */}
       <div className="border rounded-lg shadow p-4 bg-white mb-6 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
         {/* Search */}
@@ -103,7 +103,8 @@ export default function Dashboard() {
       </div>
 
       {/* Meta: showing range */}
-      <div className="mb-4 text-sm text-gray-600">
+      <div className="flex-1">
+        <div className="mb-4 text-sm text-gray-600">
         Showing <span className="font-medium">{showingFrom}</span>–
         <span className="font-medium">{showingTo}</span> of{" "}
         <span className="font-medium">{filteredTasks.length}</span> tasks
@@ -120,6 +121,7 @@ export default function Dashboard() {
             No tasks found 😔
           </div>
         )}
+      </div>
       </div>
 
       {/* Pagination */}
