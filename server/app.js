@@ -1,11 +1,19 @@
+import { config } from 'dotenv';
+config
 import express from 'express'
 import userRouter from './Routes/userRoute.js'
 import taskRouter from './Routes/taskRoute.js'
 import {ErrorMiddleware} from './middleware/Error.js';
 import cookieParser from "cookie-parser";
+import cors from 'cors'
 
 const app = express();
 
+app.use(cors({
+    // origin:process.env.FRONTEND_URL,
+    origin:'http://localhost:5173',
+    credentials:true
+}))
 app.use(express.json());
 app.use(cookieParser());
 
