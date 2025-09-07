@@ -1,5 +1,5 @@
-import { config } from 'dotenv';
-config
+import dotenv from "dotenv";
+dotenv.config();
 import express from 'express'
 import userRouter from './Routes/userRoute.js'
 import taskRouter from './Routes/taskRoute.js'
@@ -10,8 +10,7 @@ import cors from 'cors'
 const app = express();
 
 app.use(cors({
-    // origin:process.env.FRONTEND_URL,
-    origin:'http://localhost:5173',
+    origin:process.env.FRONTEND_URL,
     credentials:true
 }))
 app.use(express.json());
