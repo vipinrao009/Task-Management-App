@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../api/baseUrl";
+import toast from "react-hot-toast";
+import { FaSpinner } from "react-icons/fa";
+
 
 export default function Login() {
+  const [loading, setLoading] = useState(false)
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -19,11 +23,16 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       const res = await axiosInstance.post("/user/login", loginData);
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Failed to login")
+    }finally{
+      setLoading(false)
+    }
   };
 
   return (
@@ -55,12 +64,23 @@ export default function Login() {
           type="submit"
           className="bg-blue-500 text-white p-2 w-full cursor-pointer rounded"
         >
-          Login
+          {loading ? (
+            <div className="flex justify-center items-center">
+              <FaSpinner className="animate-spin" />
+            </div>
+          ) : (
+            "Register"
+          )}
         </button>
 
         <div className="flex pt-2 gap-2">
           <h5>Don't have account </h5>
-          <span onClick={()=>navigate('/register')} className=" cursor-pointer font-semibold text-blue-500 hover:text-blue-600">Sign Up</span>
+          <span
+            onClick={() => navigate("/register")}
+            className=" cursor-pointer font-semibold text-blue-500 hover:text-blue-600"
+          >
+            Sign Up
+          </span>
         </div>
       </form>
     </div>
