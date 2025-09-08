@@ -53,10 +53,15 @@ export default function Login() {
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white p-2 w-full rounded"
+          className="bg-blue-500 text-white p-2 w-full cursor-pointer rounded"
         >
           Login
         </button>
+
+        <div className="flex pt-2 gap-2">
+          <h5>Don't have account </h5>
+          <span onClick={()=>navigate('/register')} className=" cursor-pointer font-semibold text-blue-500 hover:text-blue-600">Sign Up</span>
+        </div>
       </form>
     </div>
   );
