@@ -72,7 +72,7 @@ export default function Login() {
                 <FaSpinner className="animate-spin" />
               </div>
             ) : (
-              "Register"
+              "Login"
             )}
           </button>
 
